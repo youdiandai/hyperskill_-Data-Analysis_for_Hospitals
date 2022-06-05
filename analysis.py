@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -33,10 +34,20 @@ if __name__ == '__main__':
     general_sports_age_df = hospital.pivot_table(index="hospital", aggfunc="median").loc[["general", "sports"],]['age']
     max_blood_test = hospital[hospital.blood_test == "t"].pivot_table(index="hospital", values="blood_test",
                                                                       aggfunc="count")
-    print(f"The answer to the 1st question is {hospital.groupby('hospital').apply(lambda x: x.shape[0]).idxmax()}")
-    print(
-        f"The answer to the 2nd question is {round((general_df.loc[general_df.diagnosis == 'stomach'].shape[0] / general_df.shape[0]), 3)}")
-    print(
-        f"The answer to the 3rd question is {round((sports_df.loc[sports_df.diagnosis == 'dislocation'].shape[0] / sports_df.shape[0]), 3)}")
-    print(f"The answer to the 4th question is {int(general_sports_age_df.max()-general_sports_age_df.min())}")
-    print(f"The answer to the 5th question is {max_blood_test.idxmax()[0]}, {max_blood_test.max()[0]} blood tests")
+
+    # print(f"The answer to the 1st question is {hospital.groupby('hospital').apply(lambda x: x.shape[0]).idxmax()}")
+    # print(
+    #     f"The answer to the 2nd question is {round((general_df.loc[general_df.diagnosis == 'stomach'].shape[0] / general_df.shape[0]), 3)}")
+    # print(
+    #     f"The answer to the 3rd question is {round((sports_df.loc[sports_df.diagnosis == 'dislocation'].shape[0] / sports_df.shape[0]), 3)}")
+    # print(f"The answer to the 4th question is {int(general_sports_age_df.max()-general_sports_age_df.min())}")
+    # print(f"The answer to the 5th question is {max_blood_test.idxmax()[0]}, {max_blood_test.max()[0]} blood tests")
+    hospital.age.plot(kind="hist", bins=[0, 15, 35, 55, 70, 80])
+    plt.show()
+    print(f"The answer to the 1st question: 15-35")
+    hospital.diagnosis.value_counts().plot(kind="pie")
+    plt.show()
+    print(f"The answer to the 2nd question: pregnancy")
+    plt.violinplot(hospital.height)
+    plt.show()
+    print(f"The answer to the 3rd question: It's because Middle-aged people are stronger and less likely to get sick.")
